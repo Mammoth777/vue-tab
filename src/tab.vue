@@ -1,7 +1,7 @@
 <template>
   <div class="tab">
     <ul ref="tabul">
-      <li v-for="(item, index) in list" :key="index" @click="current = index" v-getWidth ref="lis">
+      <li v-for="(item, index) in list" :key="index" @click="current = index" v-getWidth ref="lis" class="tab-item">
         {{item}}
       </li>
       <li class="line" :style='lineStyle'>
@@ -19,7 +19,6 @@ export default {
     return {
       current: 0,
       tempPos: -1,
-      offset: 130, // 当前 tab 距离屏幕左边的偏移量
       lineStyle: {}
     };
   },
@@ -30,6 +29,10 @@ export default {
     newIndex: {
       type: Number,
       default: 0
+    },
+    offset: {
+      type: Number,
+      default: 130, // 当前 tab 距离屏幕左边的偏移量(px)
     }
   },
   directives: {
@@ -54,12 +57,6 @@ export default {
       const currentPos = this.getSum(this.current);
       let left = "";
       this.$nextTick(() => {
-        /* if (this.$refs.tabul.scrollLeft === 0) {
-          left = currentPos + "px";
-          console.log({ currentPos, sleft: this.$refs.tabul.scrollLeft });
-        } else {
-          left = this.offset + "px";
-        } */
         this.lineStyle = {
           width: lis ? lis[this.current].offsetWidth + "px" : 0,
           left: currentPos + "px"
@@ -114,8 +111,17 @@ export default {
     display: flex;
     overflow-x: scroll;
     position: relative;
-    > li {
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    &::-webkit-scrollbar {
+      /*隐藏滚轮*/
+      display: none;
+    }
+    > li.tab-item {
       padding: 0 10px;
+      margin: 0;
+      white-space: nowrap;
     }
     > li.line {
       position: absolute;

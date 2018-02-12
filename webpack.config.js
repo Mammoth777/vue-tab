@@ -26,6 +26,10 @@ module.exports = {
         }
       },
       {
+        test: /\.less/,  //打包 .less文件
+        loader:'style-loader!css-loader!less-loader'
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
